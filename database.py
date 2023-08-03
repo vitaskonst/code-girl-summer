@@ -29,7 +29,7 @@ posts = Table(
     Column("contet", Text),
     Column("author", String),
     Column("location", String),
-    Column("created_at", DateTime, server_default_func=func.now()),
+    Column("created_at", DateTime, server_default=func.now()),
     Column("updated_at", DateTime, onupdate=func.now())
 )
 
