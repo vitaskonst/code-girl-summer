@@ -26,7 +26,7 @@ posts = Table(
     metadata,
     Column("id", Integer, Identity(), primary_key=True),
     Column("title", String),
-    Column("contet", Text),
+    Column("content", Text),
     Column("author", String),
     Column("location", String),
     Column("created_at", DateTime, server_default=func.now()),
