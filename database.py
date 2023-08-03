@@ -48,7 +48,7 @@ users = Table(
     Column("password", String),
     Column("first_name", String),
     Column("last_name", String),
-    Column("created_at", DateTime)
+    Column("created_at", DateTime, server_default=func.now())
 )
 
 engine = create_engine(DATABASE_URL)
