@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI, UploadFile, HTTPException
-from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.cors import CORSMiddleware, HTTPException
 from posts.router import router as posts_router 
 from users.router import router as users_router
 from database import database
@@ -11,6 +11,7 @@ from typing import List
 
 import cloudinary
 from cloudinary.uploader import upload
+import requests
 
 app = FastAPI()
 
@@ -54,6 +55,24 @@ def upload_files(files: List[UploadFile]):
         'urls': urls
     }
 
+
+def get_dog_image_url():
+    url = "https://dog.ceo/api/breeds/image/random"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        return data["message"]
+    else:
+        raise HTTPException(status_code=response.status_code, detail="Failed to retrieve the dog image")
+
+@app.get("/dogs/image")
+async def get_dog_image():
+    try:
+        image_url = get_dog_image_url()
+        return {"image_url": image_url}
+    except HTTPException as e:
+        raise e
 
 def get_dog_image_url():
     url = "https://dog.ceo/api/breeds/image/random"
