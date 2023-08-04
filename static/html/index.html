@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Create Post</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/styles.css" /> 
+</head>
+<body>
+	<main>
+		<div id="posts">
+			<h1>All posts</h1>
+		</div>
+
+		<div id="no-posts" style="display: none;">
+			<h1>No posts available</h1>
+		</div>
+	</main>
+
+	<script type="text/javascript">
+		addEventListener('load', (event) => {
+			fetch('http://localhost:8080/posts')
+			.then(response => response.json())
+			.then(posts => {
+				if (Object.keys(posts).length > 0) {
+					let container = document.getElementById('posts');
+					for (let post_id in posts) {
+						let post = document.createElement('div');
+						post.classList.add("post");
+						
+						post.innerHTML = `
+								<h3>${posts[post_id].title}</h3>
+								<p>${posts[post_id].content}</p>
+								<h5><b>Author: </b>${posts[post_id].author}</h5>
+								<h5><i><b>Location: </b>${posts[post_id].location}</i></h5>
+						`
+
+						imageContainer = document.createElement('div');
+						imageContainer.classList.add('imageContainer');
+
+						for (let image_url of posts[post_id].image_urls) {
+							let image = document.createElement('img');
+							image.src = image_url;
+							image.style.height = '200px';
+							imageContainer.appendChild(image);
+						}
+
+						post.appendChild(imageContainer);
+						container.appendChild(post);
+					}
+				} else {
+					document.getElementById('posts').style.display = "none";
+					document.getElementById('no-posts').style.display = "block";
+				}
+			})
+			.catch(error => console.log(error));
+		});
+	</script>
+</body>
+</html>
