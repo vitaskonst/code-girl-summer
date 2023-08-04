@@ -10,6 +10,7 @@ from sqlalchemy import (
     String,
     Text,
     DateTime,
+    ARRAY,
     func
 )
 
@@ -29,6 +30,7 @@ posts = Table(
     Column("content", Text),
     Column("author", String),
     Column("location", String),
+    Column("image_urls", ARRAY(String)),
     Column("created_at", DateTime, server_default=func.now()),
     Column("updated_at", DateTime, onupdate=func.now())
 )
