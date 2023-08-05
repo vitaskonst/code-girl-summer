@@ -1,10 +1,9 @@
-# inside main.py
 from dotenv import load_dotenv
 load_dotenv()
+
 from fastapi import FastAPI, Request
 from starlette.middleware.cors import CORSMiddleware
 
-# inside router.py
 import os
 import requests
 
@@ -27,8 +26,10 @@ def genenerate_ad():
         'Authorization': "Bearer " + token
     }
 
+    keywords = "laptop, LENOVO, Intel Core i5, Nvidia, Windows 11"
+    
     response = requests.post('https://7583-185-48-148-173.ngrok-free.app/advertisement', headers=headers, json={
-        "input_text": "laptop, LENOVO, Intel Core i5, Nvidia, Windows 11"
+        "input_text": keywords
     })
 
     body = response.json()
