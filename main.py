@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI, UploadFile, HTTPException
-from starlette.middleware.cors import CORSMiddleware, HTTPException
+from starlette.middleware.cors import CORSMiddleware
 from posts.router import router as posts_router 
 from users.router import router as users_router
 from database import database
